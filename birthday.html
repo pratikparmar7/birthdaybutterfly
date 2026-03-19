@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  :root {
+    --ink:    #1c1917;
+    --paper:  #faf7f2;
+    --blush:  #e8cfc4;
+    --sage:   #b5c4b1;
+    --dust:   #c9c0b4;
+    --accent: #8b6f5e;
+  }
+
+  html { scroll-behavior:smooth; scroll-snap-type:y mandatory; }
+
+  body {
+    font-family:'Jost',sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    overflow-x:hidden;
+  }
+
+  section {
+    min-height:100vh;
+    scroll-snap-align:start;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    padding:80px 40px;
+  }
+
+  .fade {
+    opacity:0;
+    transform:translateY(20px);
+    transition:opacity 1s ease, transform 1s ease;
+  }
+  .fade.in { opacity:1; transform:translateY(0); }
+  .fade.d1 { transition-delay:0.18s; }
+  .fade.d2 { transition-delay:0.34s; }
+  .fade.d3 { transition-delay:0.5s; }
+
+  /* ── COVER ── */
+  #cover { background:var(--paper); flex-direction:column; }
+
+  .cover-inner {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:28px;
+    text-align:center;
+    max-width:440px;
+  }
+
+  .bf-main {
+    width:68px;
+    animation:bf-appear 1.2s ease 0.2s both, bf-float 5s ease-in-out 1.5s infinite;
+  }
+  @keyframes bf-appear { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes bf-float  { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-9px)} }
+
+  .bf-wl { animation:wl 2.8s ease-in-out infinite; transform-origin:55px 34px; }
+  .bf-wr { animation:wr 2.8s ease-in-out infinite; transform-origin:45px 34px; }
+  @keyframes wl { 0%,100%{transform:scaleX(1)} 50%{transform:scaleX(0.55)} }
+  @keyframes wr { 0%,100%{transform:scaleX(-1)} 50%{transform:scaleX(-0.55)} }
+
+  .cover-eyebrow {
+    font-size:0.65rem;
+    letter-spacing:0.55em;
+    text-transform:uppercase;
+    color:var(--accent);
+    font-weight:200;
+  }
+
+  .cover-title {
+    font-family:'Cormorant Garamond',serif;
+    font-weight:300;
+    font-size:clamp(3.4rem,10vw,6.2rem);
+    line-height:1.04;
+    color:var(--ink);
+  }
+  .cover-title em { font-style:italic; color:var(--accent); }
+
+  .cover-rule { width:36px; height:1px; background:var(--dust); }
+
+  .cover-caption {
+    font-size:0.68rem;
+    letter-spacing:0.4em;
+    text-transform:uppercase;
+    color:var(--dust);
+    font-weight:200;
+  }
+
+  .scroll-hint {
+    position:absolute;
+    bottom:32px;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+    animation:sh-fade 1s ease 2.2s both;
+  }
+  @keyframes sh-fade { from{opacity:0} to{opacity:1} }
+  .scroll-hint span { font-size:0.58rem; letter-spacing:0.4em; text-transform:uppercase; color:var(--dust); }
+  .sh-line {
+    width:1px; height:36px;
+    background:linear-gradient(to bottom,var(--dust),transparent);
+    animation:sh-grow 1.8s ease-in-out 2.8s infinite;
+    transform-origin:top;
+  }
+  @keyframes sh-grow { 0%{transform:scaleY(0);opacity:1} 100%{transform:scaleY(1);opacity:0} }
+
+  /* ── WARM ── */
+  #warm { background:#fdf6ef; }
+
+  .split {
+    display:grid;
+    grid-template-columns:1fr 1px 1fr;
+    gap:0 56px;
+    max-width:680px;
+    width:100%;
+    align-items:center;
+  }
+  @media(max-width:580px) {
+    .split { grid-template-columns:1fr; gap:36px 0; }
+    .v-rule { display:none; }
+    .split-r { text-align:center; }
+  }
+
+  .v-rule { background:var(--dust); }
+
+  .section-no {
+    font-size:0.6rem;
+    letter-spacing:0.45em;
+    text-transform:uppercase;
+    color:var(--accent);
+    font-weight:200;
+  }
+  .split-heading {
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(2rem,5vw,3rem);
+    font-weight:300;
+    line-height:1.22;
+    color:var(--ink);
+    margin-top:12px;
+  }
+  .split-heading em { font-style:italic; color:var(--accent); }
+
+  .split-body {
+    font-size:0.87rem;
+    line-height:1.95;
+    color:#6b5c52;
+    font-weight:300;
+  }
+  .split-footer {
+    margin-top:18px;
+    font-size:0.6rem;
+    letter-spacing:0.35em;
+    text-transform:uppercase;
+    color:var(--dust);
+  }
+
+  /* ── POETIC ── */
+  #poetic { background:var(--ink); text-align:center; flex-direction:column; gap:44px; }
+
+  .ghost-bf {
+    position:absolute;
+    fill:white;
+    opacity:0.06;
+    pointer-events:none;
+  }
+  .ghost-bf-1 { width:180px; top:48px; right:60px; transform:rotate(18deg); }
+  .ghost-bf-2 { width:100px; bottom:60px; left:50px; transform:rotate(-12deg); opacity:0.04; }
+
+  .poem-no {
+    font-size:0.6rem;
+    letter-spacing:0.5em;
+    text-transform:uppercase;
+    color:rgba(255,255,255,0.25);
+    font-weight:200;
+  }
+  .poem-body {
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(1.45rem,3.5vw,2.1rem);
+    font-weight:300;
+    font-style:italic;
+    line-height:2.1;
+    color:rgba(255,255,255,0.85);
+    max-width:520px;
+  }
+  .poem-credit {
+    font-size:0.62rem;
+    letter-spacing:0.4em;
+    text-transform:uppercase;
+    color:rgba(255,255,255,0.2);
+    font-weight:200;
+  }
+
+  /* ── FUNNY ── */
+  #funny { background:#f7f3ee; }
+
+  .funny-inner {
+    max-width:460px;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:26px;
+  }
+  .funny-rule {
+    display:flex; align-items:center; gap:14px; width:180px;
+  }
+  .funny-rule hr { flex:1; border:none; border-top:1px solid var(--dust); }
+  .funny-rule span { font-size:0.7rem; color:var(--dust); }
+
+  .funny-heading {
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(1.9rem,5vw,2.9rem);
+    font-weight:300;
+    line-height:1.28;
+    color:var(--ink);
+  }
+  .funny-heading em { font-style:italic; color:var(--accent); }
+
+  .funny-body {
+    font-size:0.85rem;
+    line-height:1.9;
+    color:#7a6b60;
+    font-weight:300;
+    max-width:340px;
+  }
+
+  /* ── HEARTFELT ── */
+  #heartfelt { background:var(--blush); }
+
+  .heart-inner {
+    max-width:500px;
+    display:flex;
+    flex-direction:column;
+    gap:28px;
+  }
+  .heart-tag {
+    font-size:0.6rem;
+    letter-spacing:0.45em;
+    text-transform:uppercase;
+    color:var(--accent);
+    font-weight:200;
+  }
+  .heart-heading {
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(2.6rem,7vw,4.4rem);
+    font-weight:300;
+    line-height:1.12;
+    color:var(--ink);
+  }
+  .heart-heading em { font-style:italic; }
+  .heart-body {
+    font-size:0.88rem;
+    line-height:2;
+    color:#5c4a40;
+    font-weight:300;
+    max-width:400px;
+  }
+  .heart-sig {
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:1.05rem;
+    color:var(--accent);
+    opacity:0.75;
+  }
+
+  /* ── FINALE ── */
+  #finale { background:var(--paper); flex-direction:column; text-align:center; }
+
+  .finale-inner {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:24px;
+  }
+
+  .finale-bf {
+    width:52px;
+    opacity:0.65;
+    animation:bf-float 4s ease-in-out infinite;
+  }
+
+  .finale-eyebrow {
+    font-size:0.62rem;
+    letter-spacing:0.5em;
+    text-transform:uppercase;
+    color:var(--dust);
+    font-weight:200;
+  }
+
+  .finale-title {
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(3rem,9vw,5.8rem);
+    font-weight:300;
+    font-style:italic;
+    color:var(--ink);
+    line-height:1.04;
+  }
+
+  .finale-line {
+    display:flex;
+    align-items:center;
+    gap:14px;
+    color:var(--dust);
+    font-size:0.62rem;
+    letter-spacing:0.38em;
+    text-transform:uppercase;
+    font-weight:200;
+  }
+  .finale-line hr { width:28px; border:none; border-top:1px solid var(--dust); }
+
+  /* ── NAV DOTS ── */
+  #ndots {
+    position:fixed;
+    right:18px;
+    top:50%;
+    transform:translateY(-50%);
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+    z-index:100;
+  }
+  .nd {
+    width:4px; height:4px;
+    border-radius:50%;
+    background:var(--dust);
+    cursor:pointer;
+    transition:all 0.4s;
+  }
+  .nd.on { background:var(--accent); transform:scale(1.6); }
+</style>
+</head>
+<body>
+
+<nav id="ndots">
+  <div class="nd on"  onclick="go(0)"></div>
+  <div class="nd"     onclick="go(1)"></div>
+  <div class="nd"     onclick="go(2)"></div>
+  <div class="nd"     onclick="go(3)"></div>
+  <div class="nd"     onclick="go(4)"></div>
+  <div class="nd"     onclick="go(5)"></div>
+</nav>
+
+<!-- ══ 1. COVER ══ -->
+<section id="cover">
+  <div class="cover-inner">
+
+    <svg class="bf-main" viewBox="0 0 100 70" xmlns="http://www.w3.org/2000/svg">
+      <g class="bf-wl">
+        <ellipse cx="27" cy="27" rx="25" ry="19" fill="#e8cfc4"/>
+        <ellipse cx="31" cy="50" rx="15" ry="11" fill="#e8cfc4" opacity="0.7"/>
+      </g>
+      <g class="bf-wr">
+        <ellipse cx="73" cy="27" rx="25" ry="19" fill="#b5c4b1"/>
+        <ellipse cx="69" cy="50" rx="15" ry="11" fill="#b5c4b1" opacity="0.7"/>
+      </g>
+      <ellipse cx="50" cy="37" rx="3.5" ry="16" fill="#8b6f5e" opacity="0.45"/>
+      <circle  cx="50" cy="18"  r="4.5"           fill="#8b6f5e" opacity="0.45"/>
+      <line x1="50" y1="14" x2="38" y2="4" stroke="#8b6f5e" stroke-width="1" stroke-linecap="round" opacity="0.35"/>
+      <circle cx="37" cy="3" r="2" fill="#8b6f5e" opacity="0.35"/>
+      <line x1="50" y1="14" x2="62" y2="4" stroke="#8b6f5e" stroke-width="1" stroke-linecap="round" opacity="0.35"/>
+      <circle cx="63" cy="3" r="2" fill="#8b6f5e" opacity="0.35"/>
+    </svg>
+
+    <p class="cover-eyebrow fade">Happy Birthday Butterfly</p>
+
+    <h1 class="cover-title fade d1">
+      Happy<br><em>Birthday</em>
+    </h1>
+
+    <div class="cover-rule fade d2"></div>
+
+    <p class="cover-caption fade d3">a card made just for you</p>
+  </div>
+
+  <div class="scroll-hint">
+    <span>scroll</span>
+    <div class="sh-line"></div>
+  </div>
+</section>
+
+<!-- ══ 2. WARM ══ -->
+<section id="warm">
+  <div class="split">
+    <div>
+      <p class="section-no fade">01</p>
+      <h2 class="split-heading fade d1">Wishing you<br><em>sunshine</em><br>always.</h2>
+    </div>
+    <div class="v-rule fade d1"></div>
+    <div class="split-r">
+      <p class="split-body fade d2">May every moment of your special day be filled with warmth, quiet joy, and the gentle company of people who love you. You make the world softer just by being in it.</p>
+      <p class="split-footer fade d3">warm wishes — 01</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 3. POETIC ══ -->
+<section id="poetic">
+  <svg class="ghost-bf ghost-bf-1" viewBox="0 0 100 70"><ellipse cx="27" cy="27" rx="25" ry="19"/><ellipse cx="31" cy="50" rx="15" ry="11"/><ellipse cx="73" cy="27" rx="25" ry="19"/><ellipse cx="69" cy="50" rx="15" ry="11"/><ellipse cx="50" cy="37" rx="4" ry="16"/><circle cx="50" cy="18" r="5"/></svg>
+  <svg class="ghost-bf ghost-bf-2" viewBox="0 0 100 70"><ellipse cx="27" cy="27" rx="25" ry="19"/><ellipse cx="31" cy="50" rx="15" ry="11"/><ellipse cx="73" cy="27" rx="25" ry="19"/><ellipse cx="69" cy="50" rx="15" ry="11"/><ellipse cx="50" cy="37" rx="4" ry="16"/><circle cx="50" cy="18" r="5"/></svg>
+
+  <div style="display:flex;flex-direction:column;align-items:center;gap:40px;position:relative;z-index:1">
+    <p class="poem-no fade">02 — a small poem</p>
+    <p class="poem-body fade d1">
+      Another year of grace,<br>
+      of mornings soft as light,<br>
+      of laughter without reason,<br>
+      and everything just right.
+    </p>
+    <p class="poem-credit fade d2">written with love</p>
+  </div>
+</section>
+
+<!-- ══ 4. FUNNY ══ -->
+<section id="funny">
+  <div class="funny-inner">
+    <p class="section-no fade">03</p>
+    <div class="funny-rule fade d1"><hr><span>✦</span><hr></div>
+    <h2 class="funny-heading fade d2">
+      Age is just a number.<br><em>Yours is simply distinguished.</em>
+    </h2>
+    <div class="funny-rule fade d2"><hr><span>✦</span><hr></div>
+    <p class="funny-body fade d3">Fine wine, good cheese, remarkable people — all improve with time. You are irrefutable proof of this fact.</p>
+  </div>
+</section>
+
+<!-- ══ 5. HEARTFELT ══ -->
+<section id="heartfelt">
+  <div class="heart-inner">
+    <p class="heart-tag fade">04 — from the heart</p>
+    <h2 class="heart-heading fade d1">
+      You are<br>a <em>gift</em><br>to this world.
+    </h2>
+    <p class="heart-body fade d2">Not just today — always. Your kindness, your warmth, the quiet way you make everything better. Happy Birthday. May this year hold everything you deserve.</p>
+    <p class="heart-sig fade d3">with love 🦋</p>
+  </div>
+</section>
+
+<!-- ══ 6. FINALE ══ -->
+<section id="finale">
+  <div class="finale-inner">
+
+    <svg class="finale-bf" viewBox="0 0 100 70" xmlns="http://www.w3.org/2000/svg">
+      <g class="bf-wl">
+        <ellipse cx="27" cy="27" rx="25" ry="19" fill="#e8cfc4"/>
+        <ellipse cx="31" cy="50" rx="15" ry="11" fill="#e8cfc4" opacity="0.7"/>
+      </g>
+      <g class="bf-wr">
+        <ellipse cx="73" cy="27" rx="25" ry="19" fill="#b5c4b1"/>
+        <ellipse cx="69" cy="50" rx="15" ry="11" fill="#b5c4b1" opacity="0.7"/>
+      </g>
+      <ellipse cx="50" cy="37" rx="3.5" ry="16" fill="#8b6f5e" opacity="0.4"/>
+      <circle  cx="50" cy="18"  r="4.5"           fill="#8b6f5e" opacity="0.4"/>
+      <line x1="50" y1="14" x2="38" y2="4" stroke="#8b6f5e" stroke-width="1" stroke-linecap="round" opacity="0.3"/>
+      <circle cx="37" cy="3" r="2" fill="#8b6f5e" opacity="0.3"/>
+      <line x1="50" y1="14" x2="62" y2="4" stroke="#8b6f5e" stroke-width="1" stroke-linecap="round" opacity="0.3"/>
+      <circle cx="63" cy="3" r="2" fill="#8b6f5e" opacity="0.3"/>
+    </svg>
+
+    <p class="finale-eyebrow fade">🦋 &nbsp; happy birthday butterfly &nbsp; 🦋</p>
+    <h2 class="finale-title fade d1">Make a Wish</h2>
+    <div class="finale-line fade d2"><hr>with love, always<hr></div>
+  </div>
+</section>
+
+<script>
+  const secs  = document.querySelectorAll('section');
+  const ndots = document.querySelectorAll('.nd');
+
+  function go(i) { secs[i].scrollIntoView({ behavior:'smooth' }); }
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.querySelectorAll('.fade').forEach(el => el.classList.add('in'));
+      const idx = Array.from(secs).indexOf(e.target);
+      ndots.forEach((d,i) => d.classList.toggle('on', i===idx));
+    });
+  }, { threshold:0.35 });
+
+  secs.forEach(s => io.observe(s));
+
+  // trigger cover on load
+  setTimeout(() => {
+    document.querySelectorAll('#cover .fade').forEach(el => el.classList.add('in'));
+  }, 80);
+</script>
+</body>
+</html>
